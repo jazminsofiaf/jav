@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<bean id="json" class="com.despegar.jav.json.JsonFactory" />
+	<bean id="flightService" class="com.despegar.jav.service.FlightService">
+		<constructor-arg ref="json" />
+	</bean>
+	<bean id="topRoute" class="com.despegar.jav.service.TopRoutesService">
+		<constructor-arg ref="json" />
+	</bean>
+	<bean id="cityService" class="com.despegar.jav.service.CityService" />
+	
+	<bean id="BestTrip" class="com.despegar.jav.service.BestTrip">
+		<constructor-arg ref="cityService" />
+		<constructor-arg ref="flightService" />
+		<constructor-arg ref="topRoute" />
+	</bean>
+
+	<bean id="bestTripController" class="com.despegar.jav.controller.BestTripController">
+		<constructor-arg ref="BestTrip" />
+	</bean>
+
+	<bean id="webConfig" class="com.despegar.jav.WebConfig">
+		<constructor-arg ref="json" />
+	</bean>
+
+	<context:annotation-config />
+
+</beans>
